@@ -24,13 +24,22 @@
         <action
             android:id="@+id/action_Second3Fragment_to_First3Fragment"
             app:destination="@id/First3Fragment"
-            app:launchSingleTop="true"
-            app:popUpToInclusive="true"/>
+           />
         <action
-            android:id="@+id/action_Second3Fragment_to_First3Fragment_home"
-            app:destination="@id/First3Fragment"
-            app:popUpTo="@+id/First3Fragment"
-            app:launchSingleTop="true"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/action_Second3Fragment_to_Third3Fragment"
+            app:destination="@id/ThirdFragment"
+            />
+
     </fragment>
+    <fragment
+        android:id="@+id/ThirdFragment"
+        android:name="com.example.demoLogin.ui.login.ThirdFragment"
+        android:label="@string/third_fragment_label"
+        tools:layout="@layout/third_fragment"></fragment>
+    <action
+        android:id="@+id/action_Second3Fragment_to_First3Fragment_home"
+        app:destination="@id/First3Fragment"
+        app:popUpTo="@+id/First3Fragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="true"/>
 </navigation>

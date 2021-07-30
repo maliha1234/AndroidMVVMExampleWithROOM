@@ -38,6 +38,9 @@ class Second3Fragment : Fragment() {
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_Second3Fragment_to_First3Fragment)
         }
+        binding.buttonThird.setOnClickListener {
+            findNavController().navigate(R.id.action_Second3Fragment_to_Third3Fragment)
+        }
     }
 
     override fun onDestroyView() {
