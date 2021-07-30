@@ -1,6 +1,4 @@
-package com.example.myapplicationlogintest.ui.login;
-
-import android.app.Activity;
+package com.example.demoLogin.ui.login;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,13 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.demoLogin.data.dao.Person;
 import com.example.myapplicationlogintest.R;
-import com.example.myapplicationlogintest.data.LoginUser;
-import com.example.myapplicationlogintest.data.dao.AppDataBase;
-import com.example.myapplicationlogintest.data.dao.AppExecutors;
-import com.example.myapplicationlogintest.data.dao.Person;
-import com.example.myapplicationlogintest.ui.login.LoginViewModel;
-import com.example.myapplicationlogintest.ui.login.LoginViewModelFactory;
+import com.example.demoLogin.data.LoginUser;
+import com.example.demoLogin.data.dao.AppDataBase;
+import com.example.demoLogin.data.dao.AppExecutors;
 import com.example.myapplicationlogintest.databinding.ActivityLoginBinding;
 
 import java.util.List;

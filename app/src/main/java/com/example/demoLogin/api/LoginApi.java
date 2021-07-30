@@ -1,6 +1,6 @@
-package com.example.myapplicationlogintest.api;
+package com.example.demoLogin.api;
 
-import com.example.myapplicationlogintest.data.LoginUser;
+import com.example.demoLogin.data.LoginUser;
 
 
 import retrofit2.Call;

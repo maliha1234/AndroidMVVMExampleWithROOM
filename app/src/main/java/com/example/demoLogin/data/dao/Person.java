@@ -1,4 +1,4 @@
-package com.example.myapplicationlogintest.data.dao;
+package com.example.demoLogin.data.dao;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

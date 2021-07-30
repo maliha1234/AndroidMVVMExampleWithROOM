@@ -1,4 +1,4 @@
-package com.example.myapplicationlogintest.data;
+package com.example.demoLogin.data;
 
 public class LoginUser {
     // string variables for our name and job

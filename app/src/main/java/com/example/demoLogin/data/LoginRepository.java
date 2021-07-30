@@ -1,16 +1,13 @@
-package com.example.myapplicationlogintest.data;
+package com.example.demoLogin.data;
 
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.myapplicationlogintest.api.LoginApi;
-import com.example.myapplicationlogintest.data.dao.AppDataBase;
-import com.example.myapplicationlogintest.data.dao.AppExecutors;
-import com.example.myapplicationlogintest.data.dao.Person;
-import com.example.myapplicationlogintest.data.model.LoggedInUser;
-import com.example.myapplicationlogintest.service.LoginService;
+import com.example.demoLogin.api.LoginApi;
+import com.example.demoLogin.data.model.LoggedInUser;
+import com.example.demoLogin.service.LoginService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
