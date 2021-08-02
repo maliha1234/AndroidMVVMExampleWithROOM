@@ -57,13 +57,8 @@ class LoginViewModel internal constructor(  //private MutableLiveData<LoginUser>
 
     fun insertIntoDB(personDaoNew: PersonDaoNew, personNew: PersonNew){
      viewModelScope.launch {
-            insert(personDaoNew,personNew)}
+            loginRepository.insert(personDaoNew,personNew)}
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(personDaoNew: PersonDaoNew, personNew: PersonNew) {
-        personDaoNew.insertPerson(personNew)
-    }
 
 }

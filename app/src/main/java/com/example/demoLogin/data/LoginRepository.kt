@@ -1,9 +1,12 @@
 package com.example.demoLogin.data
 
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.demoLogin.api.LoginApi
+import com.example.demoLogin.data.dao.PersonDaoNew
+import com.example.demoLogin.data.dao.PersonNew
 import com.example.demoLogin.data.model.LoggedInUser
 import com.example.demoLogin.service.LoginService
 import retrofit2.Call
@@ -73,4 +76,11 @@ class LoginRepository private constructor(dataSource: LoginDataSource) {
     init {
         loginApi = LoginService.createService(LoginApi::class.java)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insert(personDaoNew: PersonDaoNew, personNew: PersonNew) {
+        personDaoNew.insertPerson(personNew)
+    }
+
 }
