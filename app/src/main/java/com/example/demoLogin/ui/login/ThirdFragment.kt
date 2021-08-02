@@ -10,8 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.myapplicationlogintest.databinding.ThirdFragmentBinding
+import com.example.demoLogin.data.dao.AppDataBase
+import com.example.demoLogin.data.dao.AppExecutors
+import com.example.demoLogin.data.dao.Person
 import com.example.myapplicationlogintest.R
+import com.example.myapplicationlogintest.databinding.ThirdFragmentBinding
 
 
 class ThirdFragment : Fragment() {
@@ -40,6 +43,8 @@ class ThirdFragment : Fragment() {
         val showButton = binding.show
         val loadingProgressBar = binding.loading
 
+        val mDb = AppDataBase.getInstance(activity)
+
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
         loginViewModel.getLoginFormState().observe(viewLifecycleOwner,
@@ -63,6 +68,14 @@ class ThirdFragment : Fragment() {
                 }
                 loadingProgressBar.visibility = View.GONE
                 updateUiWithUser(loginResult.name)
+
+                AppExecutors.getInstance().diskIO().execute {
+                    val person =
+                        Person(loginResult.name, loginResult.job)
+                    mDb.personDao().insertPerson(person)
+
+                    //finish();
+                }
 
                 //Complete and destroy login activity once successful
                 //finish();
