@@ -77,8 +77,7 @@ class ThirdFragment : Fragment() {
                     val person =
                         PersonNew(loginResult.name, loginResult.job)
 
-                loginViewModel.viewModelScope.launch {
-                insert(db.personDaoNew()!!,person)}
+                     loginViewModel.insertIntoDB(db.personDaoNew(),person)
                     //mDb.personDaoNew().insertPerson(person)
 
                     //finish();
@@ -140,11 +139,6 @@ class ThirdFragment : Fragment() {
         Toast.makeText(activity, welcome, Toast.LENGTH_LONG).show()
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(personDaoNew: PersonDaoNew,personNew: PersonNew) {
-        personDaoNew.insertPerson(personNew)
-    }
 
 
 }

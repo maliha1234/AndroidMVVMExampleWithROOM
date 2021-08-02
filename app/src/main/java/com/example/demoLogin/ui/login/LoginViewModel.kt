@@ -1,12 +1,17 @@
 package com.example.demoLogin.ui.login
 
 import android.util.Patterns
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.demoLogin.data.LoginRepository
 import com.example.demoLogin.data.LoginUser
+import com.example.demoLogin.data.dao.PersonDaoNew
+import com.example.demoLogin.data.dao.PersonNew
 import com.example.myapplicationlogintest.R
+import kotlinx.coroutines.launch
 
 class LoginViewModel internal constructor(  //private MutableLiveData<LoginUser> loginResult = new MutableLiveData<>();
     private val loginRepository: LoginRepository
@@ -49,4 +54,16 @@ class LoginViewModel internal constructor(  //private MutableLiveData<LoginUser>
     private fun isPasswordValid(password: String?): Boolean {
         return password != null && password.trim { it <= ' ' }.length > 5
     }
+
+    fun insertIntoDB(personDaoNew: PersonDaoNew, personNew: PersonNew){
+     viewModelScope.launch {
+            insert(personDaoNew,personNew)}
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insert(personDaoNew: PersonDaoNew, personNew: PersonNew) {
+        personDaoNew.insertPerson(personNew)
+    }
+
 }
