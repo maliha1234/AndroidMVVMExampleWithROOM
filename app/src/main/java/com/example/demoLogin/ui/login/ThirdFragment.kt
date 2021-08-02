@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapplicationlogintest.R
+import com.example.myapplicationlogintest.databinding.ThirdFragmentBinding
 
 class ThirdFragment : Fragment() {
 
@@ -16,11 +17,20 @@ class ThirdFragment : Fragment() {
 
     private lateinit var viewModel: ThirdViewModel
 
+    private var _binding: ThirdFragmentBinding? = null
+
+    // with the backing property of the kotlin
+    // we extract
+    // the non null value of the _binding
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.third_fragment, container, false)
+        _binding = ThirdFragmentBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -29,6 +39,11 @@ class ThirdFragment : Fragment() {
 
 
         // TODO: Use the ViewModel
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
