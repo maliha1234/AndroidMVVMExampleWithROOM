@@ -11,6 +11,7 @@ import com.example.demoLogin.data.LoginUser
 import com.example.demoLogin.data.dao.PersonDaoNew
 import com.example.demoLogin.data.dao.PersonNew
 import com.example.myapplicationlogintest.R
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel internal constructor(  //private MutableLiveData<LoginUser> loginResult = new MutableLiveData<>();
@@ -56,7 +57,7 @@ class LoginViewModel internal constructor(  //private MutableLiveData<LoginUser>
     }
 
     fun insertIntoDB(personDaoNew: PersonDaoNew, personNew: PersonNew){
-     viewModelScope.launch {
+     viewModelScope.launch(Dispatchers.IO) {
             loginRepository.insert(personDaoNew,personNew)}
     }
 
