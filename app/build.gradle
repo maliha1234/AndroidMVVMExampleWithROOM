@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+
 }
 
 android {
@@ -56,4 +58,10 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
+
+    // Room components
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+
 }

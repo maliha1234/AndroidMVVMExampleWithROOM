@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.WorkerThread
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.demoLogin.data.dao.AppDataBase
-import com.example.demoLogin.data.dao.AppExecutors
-import com.example.demoLogin.data.dao.Person
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import com.example.demoLogin.MyApplication
+import com.example.demoLogin.data.dao.*
 import com.example.myapplicationlogintest.R
 import com.example.myapplicationlogintest.databinding.ThirdFragmentBinding
 
@@ -43,7 +45,9 @@ class ThirdFragment : Fragment() {
         val showButton = binding.show
         val loadingProgressBar = binding.loading
 
-        val mDb = AppDataBase.getInstance(activity)
+       val db = AppDBNew.getDatabase(MyApplication.appContext)
+
+
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -69,13 +73,16 @@ class ThirdFragment : Fragment() {
                 loadingProgressBar.visibility = View.GONE
                 updateUiWithUser(loginResult.name)
 
-                AppExecutors.getInstance().diskIO().execute {
+
                     val person =
-                        Person(loginResult.name, loginResult.job)
-                    mDb.personDao().insertPerson(person)
+                        PersonNew(loginResult.name, loginResult.job)
+
+                loginViewModel.viewModelScope.launch {
+                insert(db.personDaoNew()!!,person)}
+                    //mDb.personDaoNew().insertPerson(person)
 
                     //finish();
-                }
+
 
                 //Complete and destroy login activity once successful
                 //finish();
@@ -132,5 +139,12 @@ class ThirdFragment : Fragment() {
         // TODO : initiate successful logged in experience
         Toast.makeText(activity, welcome, Toast.LENGTH_LONG).show()
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insert(personDaoNew: PersonDaoNew,personNew: PersonNew) {
+        personDaoNew.insertPerson(personNew)
+    }
+
 
 }
