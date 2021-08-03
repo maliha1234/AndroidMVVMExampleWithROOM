@@ -1,15 +1,17 @@
-package com.example.demoLogin.data.dao
+package com.example.demoLogin.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.demoLogin.data.dao.AssociatesPersonDao
+import com.example.demoLogin.data.model.PersonNew
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(entities = arrayOf(PersonNew::class), version = 2, exportSchema = false)
 public abstract class AppDBNew : RoomDatabase() {
 
-    abstract fun personDaoNew(): PersonDaoNew
+    abstract fun personDaoNew(): AssociatesPersonDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

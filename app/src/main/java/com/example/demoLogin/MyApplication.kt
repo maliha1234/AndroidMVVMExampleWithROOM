@@ -2,8 +2,7 @@ package com.example.demoLogin
 
 import android.app.Application
 import android.content.Context
-import com.example.demoLogin.data.LoginRepository
-import com.example.demoLogin.data.dao.AppDBNew
+import com.example.demoLogin.db.AppDBNew
 
 class MyApplication : Application() {
     // Using by lazy so the database and the repository are only created when they're needed

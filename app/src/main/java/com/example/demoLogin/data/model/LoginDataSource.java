@@ -1,6 +1,7 @@
-package com.example.demoLogin.data;
+package com.example.demoLogin.data.model;
 
 import com.example.demoLogin.data.model.LoggedInUser;
+import com.example.demoLogin.data.model.Result;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.example.demoLogin.ui.login
+package com.example.demoLogin.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

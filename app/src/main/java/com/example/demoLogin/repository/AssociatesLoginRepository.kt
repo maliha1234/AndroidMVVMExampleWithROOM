@@ -1,13 +1,15 @@
-package com.example.demoLogin.data
+package com.example.demoLogin.repository
 
 import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.demoLogin.api.LoginApi
-import com.example.demoLogin.data.dao.PersonDaoNew
-import com.example.demoLogin.data.dao.PersonNew
+import com.example.demoLogin.api.AssociatesLoginApi
+import com.example.demoLogin.data.model.LoginDataSource
+import com.example.demoLogin.data.dao.AssociatesPersonDao
+import com.example.demoLogin.data.model.PersonNew
 import com.example.demoLogin.data.model.LoggedInUser
+import com.example.demoLogin.data.model.LoginUser
 import com.example.demoLogin.service.LoginService
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,8 +19,8 @@ import retrofit2.Response
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
-class LoginRepository private constructor(dataSource: LoginDataSource) {
-    private val loginApi: LoginApi
+class AssociatesLoginRepository private constructor(dataSource: LoginDataSource) {
+    private val associatesLoginApi: AssociatesLoginApi
     val result = LoginUser()
     val loginResult: LiveData<LoginUser>
         get() = Companion.loginResult
@@ -44,7 +46,7 @@ class LoginRepository private constructor(dataSource: LoginDataSource) {
 
         //result.setJob(loginUser.getJob());
         // result.setName(loginUser.getName());
-        loginApi.createPost(loginUser).enqueue(object : Callback<LoginUser> {
+        associatesLoginApi.createPost(loginUser).enqueue(object : Callback<LoginUser> {
             override fun onResponse(call: Call<LoginUser>, response: Response<LoginUser>) {
                 // this method is called when we get response from our api.
                 if (response.isSuccessful) {
@@ -62,11 +64,11 @@ class LoginRepository private constructor(dataSource: LoginDataSource) {
 
     companion object {
         @Volatile
-        private var instance: LoginRepository? = null
+        private var instance: AssociatesLoginRepository? = null
         private val loginResult = MutableLiveData<LoginUser>()
-        public fun getInstance(dataSource: LoginDataSource): LoginRepository? {
+        public fun getInstance(dataSource: LoginDataSource): AssociatesLoginRepository? {
             if (instance == null) {
-                instance = LoginRepository(dataSource)
+                instance = AssociatesLoginRepository(dataSource)
             }
             return instance
         }
@@ -74,13 +76,13 @@ class LoginRepository private constructor(dataSource: LoginDataSource) {
 
     // private constructor : singleton access
     init {
-        loginApi = LoginService.createService(LoginApi::class.java)
+        associatesLoginApi = LoginService.createService(AssociatesLoginApi::class.java)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(personDaoNew: PersonDaoNew, personNew: PersonNew) {
-        personDaoNew.insertPerson(personNew)
+    suspend fun insert(associatesPersonDao: AssociatesPersonDao, personNew: PersonNew) {
+        associatesPersonDao.insertPerson(personNew)
     }
 
 }

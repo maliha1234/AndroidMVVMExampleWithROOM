@@ -1,9 +1,9 @@
-package com.example.demoLogin.ui.login
+package com.example.demoLogin.ui.view
 
 /**
  * Data validation state of the login form.
  */
-class LoginFormState {
+class AssociatesLoginFormState {
     var usernameError: Int?
         private set
     var passwordError: Int?

@@ -1,4 +1,4 @@
-package com.example.demoLogin.ui.login
+package com.example.demoLogin.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

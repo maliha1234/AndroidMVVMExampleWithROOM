@@ -1,4 +1,4 @@
-package com.example.demoLogin.data.dao
+package com.example.demoLogin.data.model
 
 import androidx.room.Entity
 import androidx.room.Ignore

@@ -1,10 +1,11 @@
 package com.example.demoLogin.data.dao
 
 import androidx.room.*
+import com.example.demoLogin.data.model.PersonNew
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface PersonDaoNew {
+interface AssociatesPersonDao {
     @Query("SELECT * FROM PERSON ORDER BY ID")
     fun loadAllPersons(): Flow<List<PersonNew>>
 

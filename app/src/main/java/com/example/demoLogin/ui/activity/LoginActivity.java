@@ -1,4 +1,4 @@
-package com.example.demoLogin.ui.login;
+package com.example.demoLogin.ui.activity;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,20 +20,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.demoLogin.data.dao.Person;
+
+import com.example.demoLogin.ui.view.AssociatesLoginFormState;
+import com.example.demoLogin.viewmodel.AssociatesLoginViewModel;
+import com.example.demoLogin.viewmodel.LoginViewModelFactory;
 import com.example.myapplicationlogintest.R;
-import com.example.demoLogin.data.LoginUser;
-import com.example.demoLogin.data.dao.AppDataBase;
-import com.example.demoLogin.data.dao.AppExecutors;
+import com.example.demoLogin.data.model.LoginUser;
+
 import com.example.myapplicationlogintest.databinding.ActivityLoginBinding;
 
-import java.util.List;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
+    private AssociatesLoginViewModel associatesLoginViewModel;
     private ActivityLoginBinding binding;
-    private AppDataBase mDb;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,33 +44,32 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        associatesLoginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(AssociatesLoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final Button showButton = binding.show;
         final ProgressBar loadingProgressBar = binding.loading;
-        mDb = AppDataBase.getInstance(getApplicationContext());
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        associatesLoginViewModel.getLoginFormState().observe(this, new Observer<AssociatesLoginFormState>() {
             @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
+            public void onChanged(@Nullable AssociatesLoginFormState associatesLoginFormState) {
+                if (associatesLoginFormState == null) {
                     return;
                 }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                loginButton.setEnabled(associatesLoginFormState.isDataValid());
+                if (associatesLoginFormState.getUsernameError() != null) {
+                    usernameEditText.setError(getString(associatesLoginFormState.getUsernameError()));
                 }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                if (associatesLoginFormState.getPasswordError() != null) {
+                    passwordEditText.setError(getString(associatesLoginFormState.getPasswordError()));
                 }
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginUser>() {
+        associatesLoginViewModel.getLoginResult().observe(this, new Observer<LoginUser>() {
             @Override
             public void onChanged(@Nullable LoginUser loginResult) {
                 if (loginResult == null) {
@@ -80,16 +80,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     updateUiWithUser(loginResult.getName());
 
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Person person = new Person(loginResult.getName(),loginResult.getJob());
-                        mDb.personDao().insertPerson(person);
-
-                        //finish();
-                    }
-                });
 
 
                 //Complete and destroy login activity once successful
@@ -110,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+                associatesLoginViewModel.loginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
@@ -121,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
+                    associatesLoginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -132,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+                associatesLoginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -140,16 +130,6 @@ public class LoginActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadingProgressBar.setVisibility(View.VISIBLE);
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Person person = mDb.personDao().loadPersonById(1);
-                        List<Person> persons = mDb.personDao().loadAllPersons();
-                        Log.d("person", String.valueOf(persons.size()));
-                        //Toast.makeText(getApplicationContext(), person.getName(), Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
     }

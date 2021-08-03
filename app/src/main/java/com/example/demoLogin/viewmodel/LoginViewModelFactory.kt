@@ -1,9 +1,9 @@
-package com.example.demoLogin.ui.login
+package com.example.demoLogin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.demoLogin.data.LoginDataSource
-import com.example.demoLogin.data.LoginRepository
+import com.example.demoLogin.data.model.LoginDataSource
+import com.example.demoLogin.repository.AssociatesLoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -11,8 +11,8 @@ import com.example.demoLogin.data.LoginRepository
  */
 class LoginViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            LoginViewModel(LoginRepository.getInstance(LoginDataSource())!!) as T
+        return if (modelClass.isAssignableFrom(AssociatesLoginViewModel::class.java)) {
+            AssociatesLoginViewModel(AssociatesLoginRepository.getInstance(LoginDataSource())!!) as T
         } else {
             throw IllegalArgumentException("Unknown ViewModel class")
         }

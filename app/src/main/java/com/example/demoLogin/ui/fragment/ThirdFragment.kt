@@ -1,4 +1,4 @@
-package com.example.demoLogin.ui.login
+package com.example.demoLogin.ui.fragment
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.WorkerThread
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import com.example.demoLogin.MyApplication
 import com.example.demoLogin.data.dao.*
+import com.example.demoLogin.data.model.PersonNew
+import com.example.demoLogin.db.AppDBNew
+import com.example.demoLogin.ui.view.AssociatesLoginFormState
+import com.example.demoLogin.viewmodel.LoginViewModelFactory
+import com.example.demoLogin.viewmodel.AssociatesLoginViewModel
 import com.example.myapplicationlogintest.R
 import com.example.myapplicationlogintest.databinding.ThirdFragmentBinding
 
@@ -25,7 +27,7 @@ class ThirdFragment : Fragment() {
         fun newInstance() = ThirdFragment()
     }
 
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var associatesLoginViewModel: AssociatesLoginViewModel
 
     private var _binding: ThirdFragmentBinding? = null
 
@@ -49,10 +51,10 @@ class ThirdFragment : Fragment() {
 
 
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
-        loginViewModel.getLoginFormState().observe(viewLifecycleOwner,
-            Observer<LoginFormState?> { loginFormState ->
+        associatesLoginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+            .get(AssociatesLoginViewModel::class.java)
+        associatesLoginViewModel.getLoginFormState().observe(viewLifecycleOwner,
+            Observer<AssociatesLoginFormState?> { loginFormState ->
                 if (loginFormState == null) {
                     return@Observer
                 }
@@ -65,7 +67,7 @@ class ThirdFragment : Fragment() {
                 }
             })
 
-        loginViewModel.loginResult.observe(viewLifecycleOwner,
+        associatesLoginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 if (loginResult == null) {
                     return@Observer
@@ -77,7 +79,7 @@ class ThirdFragment : Fragment() {
                     val person =
                         PersonNew(loginResult.name, loginResult.job)
 
-                     loginViewModel.insertIntoDB(db.personDaoNew(),person)
+                     //associatesLoginViewModel.insertIntoDB(db.personDaoNew(),person)
                     //mDb.personDaoNew().insertPerson(person)
 
                     //finish();
@@ -98,7 +100,7 @@ class ThirdFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                loginViewModel.loginDataChanged(
+                associatesLoginViewModel.loginDataChanged(
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
                 )
@@ -110,7 +112,7 @@ class ThirdFragment : Fragment() {
 
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(
+            associatesLoginViewModel.login(
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )

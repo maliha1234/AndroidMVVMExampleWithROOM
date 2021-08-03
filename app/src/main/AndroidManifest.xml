@@ -12,19 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationlogintest">
-        <activity android:name="com.example.demoLogin.ui.login.CoruotinetestActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name="com.example.demoLogin.ui.activity.CoruotinetestActivity"></activity>
         <activity
-            android:name="com.example.demoLogin.ui.login.LoginNew"
+            android:name="com.example.demoLogin.ui.activity.HomeActivity"
             android:label="@string/title_activity_login_new"
             android:theme="@style/Theme.MyApplicationlogintest.NoActionBar">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
-            android:name="com.example.demoLogin.ui.login.LoginActivity"
+            android:name="com.example.demoLogin.ui.activity.LoginActivity"
             android:label="@string/app_name"></activity>
     </application>
 
