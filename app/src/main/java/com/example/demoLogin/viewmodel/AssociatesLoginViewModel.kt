@@ -62,8 +62,12 @@ class AssociatesLoginViewModel internal constructor(  //private MutableLiveData<
     }
 
     fun insertIntoDB(associatesPersonDao: AssociatesPersonDao, personNew: PersonNew){
-     viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             associatesLoginRepository.insert(associatesPersonDao,personNew)}
+    }
+
+    fun clearData(){
+        associatesLoginRepository.clearData()
     }
 
 

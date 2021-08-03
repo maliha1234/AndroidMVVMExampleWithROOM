@@ -50,6 +50,7 @@ class ThirdFragment : Fragment() {
        val db = AppDBNew.getDatabase(MyApplication.appContext)
 
 
+        Toast.makeText(activity, "welcome1", Toast.LENGTH_LONG).show()
 
         associatesLoginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(AssociatesLoginViewModel::class.java)
@@ -79,7 +80,8 @@ class ThirdFragment : Fragment() {
                     val person =
                         PersonNew(loginResult.name, loginResult.job)
 
-                     //associatesLoginViewModel.insertIntoDB(db.personDaoNew(),person)
+                     associatesLoginViewModel.insertIntoDB(db.personDaoNew(),person)
+                associatesLoginViewModel.clearData()
                     //mDb.personDaoNew().insertPerson(person)
 
                     //finish();
@@ -121,6 +123,11 @@ class ThirdFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(activity, "welcome2", Toast.LENGTH_LONG).show()
+
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

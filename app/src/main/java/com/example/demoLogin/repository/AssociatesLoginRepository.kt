@@ -62,6 +62,10 @@ class AssociatesLoginRepository private constructor(dataSource: LoginDataSource)
         })
     }
 
+    fun clearData(){
+        Companion.loginResult.value = null
+    }
+
     companion object {
         @Volatile
         private var instance: AssociatesLoginRepository? = null
